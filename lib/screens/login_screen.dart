@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:meetmax/widgets/custom_text_field.dart';
+import 'package:meetmax/widgets/social_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -85,17 +87,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 // ✅ Social Login Buttons
                 Row(
                   children: [
-                    _socialButton(
+                    SocialButton(
                       text: 'Log in with Google',
-                      icon: const FaIcon(FontAwesomeIcons.google,
-                          color: Colors.black54),
+                      icon: const FaIcon(FontAwesomeIcons.google, color: Colors.black54),
                       onPressed: () {},
                     ),
                     const SizedBox(width: 12),
-                    _socialButton(
+                    SocialButton(
                       text: 'Log in with Apple',
-                      icon: const FaIcon(FontAwesomeIcons.apple,
-                          color: Colors.black54),
+                      icon: const FaIcon(FontAwesomeIcons.apple, color: Colors.black54),
                       onPressed: () {},
                     ),
                   ],
@@ -128,41 +128,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 16),
 
                 // Email Input
-                TextField(
+                CustomTextField(
                   controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Your Email',
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
-                      child: FaIcon(FontAwesomeIcons.at, size: 25),
-                    ),
-                    border: OutlineInputBorder(),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
+                  label: 'Your Email',
+                  icon: const FaIcon(FontAwesomeIcons.at),
                 ),
 
                 const SizedBox(height: 16),
 
                 // Password Input
-                TextField(
+                CustomTextField(
                   controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                    labelText: 'Create Password',
-                    prefixIcon: const Icon(Icons.lock_outline, size: 30),
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
+                  label: 'Create Password',
+                  icon: FaIcon(FontAwesomeIcons.lock),
+                  obscure: _obscurePassword,
+                  suffixIcon: IconButton(
+                    icon: Icon(_obscurePassword
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
                   ),
                 ),
 
@@ -239,31 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _socialButton({
-    required String text,
-    required Widget icon,
-    required VoidCallback onPressed,
-  }) {
-    return Expanded(
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        icon: icon,
-        label: Text(
-          text,
-          style: const TextStyle(color: Colors.black87),
-        ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFFFFFFF),
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
           ),
         ),
       ),

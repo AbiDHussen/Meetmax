@@ -20,7 +20,7 @@ class SocialButton extends StatelessWidget {
         icon: icon,
         label: Text(
           text,
-          style: const TextStyle(color: Colors.black87),
+          style: const TextStyle(color: Colors.black87, fontSize: 12),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFF5F6F8),

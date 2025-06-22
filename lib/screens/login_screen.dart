@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meetmax/widgets/custom_text_field.dart';
 import 'package:meetmax/widgets/social_button.dart';
+import 'package:meetmax/widgets/custom_elevated_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -33,10 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Logo + App Name
                     Row(
                       children: [
-                        const Icon(Icons.favorite, color: Colors.blue), // Replace with logo image if available
+                        const Icon(Icons.favorite, color: Colors.blue),
                         const SizedBox(width: 8),
                         const Text(
                           'Meetmax',
@@ -47,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    // Language Dropdown
                     DropdownButton<String>(
                       value: _selectedLanguage,
                       icon: const Icon(Icons.arrow_drop_down),
@@ -84,147 +83,151 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // ✅ Social Login Buttons
-                Row(
-                  children: [
-                    SocialButton(
-                      text: 'Log in with Google',
-                      icon: const FaIcon(FontAwesomeIcons.google, color: Colors.black54),
-                      onPressed: () {},
-                    ),
-                    const SizedBox(width: 12),
-                    SocialButton(
-                      text: 'Log in with Apple',
-                      icon: const FaIcon(FontAwesomeIcons.apple, color: Colors.black54),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    const Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.grey,
-                        endIndent: 10,
-                      ),
-                    ),
-                    const Text(
-                      "OR",
-                      style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
-                    ),
-                    const Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.grey,
-                        indent: 10,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                // Email Input
-                CustomTextField(
-                  controller: _emailController,
-                  label: 'Your Email',
-                  icon: const FaIcon(FontAwesomeIcons.at),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Password Input
-                CustomTextField(
-                  controller: _passwordController,
-                  label: 'Create Password',
-                  icon: FaIcon(FontAwesomeIcons.lock),
-                  obscure: _obscurePassword,
-                  suffixIcon: IconButton(
-                    icon: Icon(_obscurePassword
-                        ? Icons.visibility_off
-                        : Icons.visibility),
-                    onPressed: () {
-                      setState(() {
-                        _obscurePassword = !_obscurePassword;
-                      });
-                    },
+                // ✅ Container for Login Form Section
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      )
+                    ],
                   ),
-                ),
+                  child: Column(
+                    children: [
+                      // Social Buttons
+                      Row(
+                        children: [
+                          SocialButton(
+                            text: 'Log in with Google',
+                            icon: const FaIcon(FontAwesomeIcons.google, color: Colors.black54),
+                            onPressed: () {},
+                          ),
+                          const SizedBox(width: 12),
+                          SocialButton(
+                            text: 'Log in with Apple',
+                            icon: const FaIcon(FontAwesomeIcons.apple, color: Colors.black54),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
 
-                const SizedBox(height: 10),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: const [
+                          Expanded(
+                            child: Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                              endIndent: 10,
+                            ),
+                          ),
+                          Text(
+                            "OR",
+                            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                              indent: 10,
+                            ),
+                          ),
+                        ],
+                      ),
 
-                // Remember Me & Forgot Password
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _rememberMe,
-                          onChanged: (value) {
+                      const SizedBox(height: 16),
+
+                      CustomTextField(
+                        controller: _emailController,
+                        label: 'Your Email',
+                        icon: const FaIcon(FontAwesomeIcons.at),
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      CustomTextField(
+                        controller: _passwordController,
+                        label: 'Create Password',
+                        icon: FaIcon(FontAwesomeIcons.lock),
+                        obscure: _obscurePassword,
+                        suffixIcon: IconButton(
+                          icon: Icon(_obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                          onPressed: () {
                             setState(() {
-                              _rememberMe = value ?? false;
+                              _obscurePassword = !_obscurePassword;
                             });
                           },
                         ),
-                        const Text('Remember me'),
-                      ],
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        // TODO: Navigate to Forgot Password Screen
-                      },
-                      child: const Text('Forgot Password?', style: TextStyle(color: Colors.black),),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                // Sign In Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 56, // Increase height to match design
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // TODO: Handle login
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF3B82F6), // Matches blue tone
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // Slight round corner
                       ),
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+
+                      const SizedBox(height: 10),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _rememberMe,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _rememberMe = value ?? false;
+                                  });
+                                },
+                              ),
+                              const Text('Remember me'),
+                            ],
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // TODO: Navigate to Forgot Password Screen
+                            },
+                            child: const Text(
+                              'Forgot Password?',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    child: const Text('Sign In',style: TextStyle(color: Colors.white),),
+
+                      const SizedBox(height: 16),
+
+                      CustomElevatedButton(
+                        text: 'Sign In',
+                        onPressed: () {
+                          // TODO: Handle sign in
+                        },
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("You haven’t any account? "),
+                          GestureDetector(
+                            onTap: () {
+                              // TODO: Navigate to Sign Up screen
+                            },
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
 
-                const SizedBox(height: 16),
-
-                // Sign Up Link
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("You haven’t any account? "),
-                    GestureDetector(
-                      onTap: () {
-                        // TODO: Navigate to Sign Up screen
-                      },
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
+                const SizedBox(height: 24),
               ],
             ),
           ),

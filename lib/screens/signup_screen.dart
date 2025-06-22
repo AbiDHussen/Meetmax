@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meetmax/widgets/custom_text_field.dart';
 import 'package:meetmax/widgets/social_button.dart';
+import 'package:meetmax/widgets/custom_elevated_button.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -31,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 const SizedBox(height: 16),
 
-                // 🔹 Top header with logo and language
+                // 🔹 Top Header with Logo and Language
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -71,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
 
                 const Text(
                   'Getting Started',
@@ -81,174 +82,181 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const Text(
                   'Create an account to continue and connect\nwith the people.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
 
                 const SizedBox(height: 24),
 
-                // 🔹 Social Login Buttons
-                Row(
-                  children: [
-                    SocialButton(
-                      text: 'Log in with Google',
-                      icon: const FaIcon(FontAwesomeIcons.google, color: Colors.black54),
-                      onPressed: () {},
-                    ),
-                    const SizedBox(width: 12),
-                    SocialButton(
-                      text: 'Log in with Apple',
-                      icon: const FaIcon(FontAwesomeIcons.apple, color: Colors.black54),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                // 🔹 OR divider
-                Row(
-                  children: const [
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.grey,
-                        endIndent: 10,
-                      ),
-                    ),
-                    Text("OR", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.grey,
-                        indent: 10,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                // 🔹 Form Fields
-                CustomTextField(
-                  controller: _emailController,
-                  label: 'Your Email',
-                  icon: const FaIcon(FontAwesomeIcons.at),
-                ),
-                const SizedBox(height: 12),
-                CustomTextField(
-                  controller: _nameController,
-                  label: 'Your Name',
-                  icon: const FaIcon(FontAwesomeIcons.faceSmile),
-                ),
-                const SizedBox(height: 12),
-                CustomTextField(
-                  controller: _passwordController,
-                  label: 'Create Password',
-                  icon: FaIcon(FontAwesomeIcons.lock),
-                  obscure: _obscurePassword,
-                  suffixIcon: IconButton(
-                    icon: Icon(_obscurePassword
-                        ? Icons.visibility_off
-                        : Icons.visibility),
-                    onPressed: () {
-                      setState(() {
-                        _obscurePassword = !_obscurePassword;
-                      });
-                    },
+                // 🔹 Main Signup Card Container
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      )
+                    ],
                   ),
-                ),
-                const SizedBox(height: 12),
-                CustomTextField(
-                  controller: _dobController,
-                  label: 'Date of birth',
-                  icon: const Icon(Icons.calendar_today_outlined),
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime(2000),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime.now(),
-                    );
-                    if (picked != null) {
-                      setState(() {
-                        _dobController.text = "${picked.toLocal()}".split(' ')[0];
-                      });
-                    }
-                  },
-                ),
-
-                const SizedBox(height: 12),
-
-                // 🔹 Gender Toggle
-                Row(
-                  children: [
-                    const Icon(Icons.male_outlined),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Row(
+                  child: Column(
+                    children: [
+                      // 🔹 Social Login Buttons
+                      Row(
                         children: [
-                          Radio<String>(
-                            value: 'Male',
-                            groupValue: _selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedGender = value!;
-                              });
-                            },
+                          SocialButton(
+                            text: 'Log in with Google',
+                            icon: const FaIcon(FontAwesomeIcons.google, color: Colors.black54),
+                            onPressed: () {},
                           ),
-                          const Text('Male'),
-                          Radio<String>(
-                            value: 'Female',
-                            groupValue: _selectedGender,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedGender = value!;
-                              });
-                            },
+                          const SizedBox(width: 12),
+                          SocialButton(
+                            text: 'Log in with Apple',
+                            icon: const FaIcon(FontAwesomeIcons.apple, color: Colors.black54),
+                            onPressed: () {},
                           ),
-                          const Text('Female'),
                         ],
                       ),
-                    )
-                  ],
-                ),
+                      const SizedBox(height: 16),
 
-                const SizedBox(height: 16),
-
-                // 🔹 Sign Up Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // TODO: Handle sign up
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF3B82F6),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                      // 🔹 OR Divider
+                      Row(
+                        children: const [
+                          Expanded(
+                            child: Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                              endIndent: 10,
+                            ),
+                          ),
+                          Text("OR", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                          Expanded(
+                            child: Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                              indent: 10,
+                            ),
+                          ),
+                        ],
                       ),
-                      textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                    ),
-                    child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
+                      const SizedBox(height: 16),
+
+                      // 🔹 Form Fields
+                      CustomTextField(
+                        controller: _emailController,
+                        label: 'Your Email',
+                        icon: const FaIcon(FontAwesomeIcons.at),
+                      ),
+                      const SizedBox(height: 12),
+                      CustomTextField(
+                        controller: _nameController,
+                        label: 'Your Name',
+                        icon: const FaIcon(FontAwesomeIcons.faceSmile),
+                      ),
+                      const SizedBox(height: 12),
+                      CustomTextField(
+                        controller: _passwordController,
+                        label: 'Create Password',
+                        icon: const FaIcon(FontAwesomeIcons.lock),
+                        obscure: _obscurePassword,
+                        suffixIcon: IconButton(
+                          icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      CustomTextField(
+                        controller: _dobController,
+                        label: 'Date of birth',
+                        icon: const Icon(Icons.calendar_today_outlined),
+                        readOnly: true,
+                        onTap: () async {
+                          DateTime? picked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime(2000),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                          );
+                          if (picked != null) {
+                            setState(() {
+                              _dobController.text = "${picked.toLocal()}".split(' ')[0];
+                            });
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 12),
+
+                      // 🔹 Gender Selection
+                      Row(
+                        children: [
+                          const Icon(Icons.male_outlined),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<String>(
+                                  value: 'Male',
+                                  groupValue: _selectedGender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedGender = value!;
+                                    });
+                                  },
+                                ),
+                                const Text('Male'),
+                                Radio<String>(
+                                  value: 'Female',
+                                  groupValue: _selectedGender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedGender = value!;
+                                    });
+                                  },
+                                ),
+                                const Text('Female'),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+
+                      // 🔹 Sign Up Button
+                      CustomElevatedButton(
+                        text: 'Sign Up',
+                        onPressed: () {
+                          // TODO: Handle sign up
+                        },
+                      ),
+                      const SizedBox(height: 16),
+
+                      // 🔹 Already Have an Account
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Already have an account? "),
+                          GestureDetector(
+                            onTap: () {
+                              // TODO: Navigate to Sign In screen
+                            },
+                            child: const Text(
+                              'Sign In',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // 🔹 Already have account
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Already have an account? "),
-                    GestureDetector(
-                      onTap: () {
-                        // TODO: Navigate to Sign In screen
-                      },
-                      child: const Text('Sign In', style: TextStyle(color: Colors.blue)),
-                    ),
-                  ],
                 ),
 
                 const SizedBox(height: 24),

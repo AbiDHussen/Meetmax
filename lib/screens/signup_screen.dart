@@ -58,16 +58,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           _selectedLanguage = newValue!;
                         });
                       },
-                      items: <String>[
-                        'English (UK)',
-                        'English (US)',
-                        'Bangla',
-                      ].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                      items: <String>['English (UK)', 'English (US)', 'Bangla']
+                          .map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          })
+                          .toList(),
                     ),
                   ],
                 ),
@@ -101,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.black12,
                         blurRadius: 10,
                         offset: Offset(0, 4),
-                      )
+                      ),
                     ],
                   ),
                   child: Column(
@@ -111,13 +109,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           SocialButton(
                             text: 'Log in with Google',
-                            icon: const FaIcon(FontAwesomeIcons.google, color: Colors.black54),
+                            icon: const FaIcon(
+                              FontAwesomeIcons.google,
+                              color: Colors.black54,
+                            ),
                             onPressed: () {},
                           ),
                           const SizedBox(width: 12),
                           SocialButton(
                             text: 'Log in with Apple',
-                            icon: const FaIcon(FontAwesomeIcons.apple, color: Colors.black54),
+                            icon: const FaIcon(
+                              FontAwesomeIcons.apple,
+                              color: Colors.black54,
+                            ),
                             onPressed: () {},
                           ),
                         ],
@@ -134,7 +138,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               endIndent: 10,
                             ),
                           ),
-                          Text("OR", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                          Text(
+                            "OR",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           Expanded(
                             child: Divider(
                               thickness: 1,
@@ -165,7 +175,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         icon: const FaIcon(FontAwesomeIcons.lock),
                         obscure: _obscurePassword,
                         suffixIcon: IconButton(
-                          icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
                           onPressed: () {
                             setState(() {
                               _obscurePassword = !_obscurePassword;
@@ -188,7 +202,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           );
                           if (picked != null) {
                             setState(() {
-                              _dobController.text = "${picked.toLocal()}".split(' ')[0];
+                              _dobController.text = "${picked.toLocal()}".split(
+                                ' ',
+                              )[0];
                             });
                           }
                         },
@@ -196,38 +212,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(height: 12),
 
                       // 🔹 Gender Selection
-                      Row(
-                        children: [
-                          const Icon(Icons.male_outlined),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Radio<String>(
-                                  value: 'Male',
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                                const Text('Male'),
-                                Radio<String>(
-                                  value: 'Female',
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value!;
-                                    });
-                                  },
-                                ),
-                                const Text('Female'),
-                              ],
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.male_outlined, color: Colors.grey),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Radio<String>(
+                                    value: 'Male',
+                                    groupValue: _selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedGender = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('Male'),
+                                  Radio<String>(
+                                    value: 'Female',
+                                    groupValue: _selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedGender = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('Female'),
+                                ],
+                              ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
+
                       const SizedBox(height: 16),
 
                       // 🔹 Sign Up Button

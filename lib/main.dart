@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meetmax/screens/feed_screen.dart';
 import 'package:meetmax/screens/forgot_password_screen.dart';
 import 'package:meetmax/screens/signup_screen.dart';
 import 'screens/login_screen.dart';
@@ -19,7 +20,7 @@ class MeetmaxApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Roboto',
       ),
-      home: const ForgotPasswordScreen(),
+      home: const FeedPage(),
     );
   }
 }

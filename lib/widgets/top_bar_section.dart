@@ -14,11 +14,16 @@ class TopBarSection extends StatelessWidget {
       child: Row(
         children: [
           // Dynamic Profile Picture
-          CircleAvatar(
-            radius: 22.0,
-            backgroundColor: Colors.grey[200],
-            backgroundImage: CachedNetworkImageProvider(currentUser.imageUrl),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15), // Adjust radius as needed
+            child: CachedNetworkImage(
+              imageUrl: currentUser.imageUrl,
+              width: 44, // same as diameter of radius 22
+              height: 44,
+              fit: BoxFit.cover,
+            ),
           ),
+
 
           const SizedBox(width: 12),
 

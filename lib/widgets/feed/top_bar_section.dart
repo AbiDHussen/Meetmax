@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:meetmax/models/dummy_user.dart';
 import 'package:meetmax/models/user.dart';
 
 class TopBarSection extends StatelessWidget {
-  final User currentUser;
+  final DummyUser currentUser;
 
   const TopBarSection({super.key, required this.currentUser});
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meetmax/widgets/custom_text_field.dart';
-import 'package:meetmax/widgets/social_button.dart';
-import 'package:meetmax/widgets/custom_elevated_button.dart';
+import 'package:meetmax/services/auth_service.dart';
+import 'package:meetmax/widgets/customButtonAndTextfield/custom_text_field.dart';
+import 'package:meetmax/widgets/customButtonAndTextfield/social_button.dart';
+import 'package:meetmax/widgets/customButtonAndTextfield/custom_elevated_button.dart';
+import 'package:meetmax/screens/feed_screen.dart'; // or your actual path
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
   bool _obscurePassword = true;
   String _selectedLanguage = 'English (UK)';
+  final _authService = AuthService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       CustomTextField(
                         controller: _passwordController,
-                        label: 'Create Password',
+                        label: 'Password',
                         icon: FaIcon(FontAwesomeIcons.lock),
                         obscure: _obscurePassword,
                         suffixIcon: IconButton(
@@ -201,9 +206,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       CustomElevatedButton(
                         text: 'Sign In',
-                        onPressed: () {
-                          // TODO: Handle sign in
+                        onPressed: () async {
+                          final success = await _authService.signIn(
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text.trim(),
+                          );
+
+                          if (success) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Login successful')),
+                            );
+
+                            // Navigate to FeedPage
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => const FeedPage()),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Invalid email or password')),
+                            );
+                          }
                         },
+
                       ),
 
                       const SizedBox(height: 16),

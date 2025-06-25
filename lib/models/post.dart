@@ -1,21 +1,38 @@
-import 'package:meetmax/models/user.dart';
+import 'package:hive/hive.dart';
+import 'comment.dart';
 
-class Post {
-  final User user;
-  final String caption;
-  final String timeAgo;
-  final String imageUrl;
-  final int likes;
-  final int comments;
-  final int shares;
+part 'post.g.dart';
 
-  const Post({
-    required this.user,
-    required this.caption,
-    required this.timeAgo,
-    required this.imageUrl,
+@HiveType(typeId: 1)
+class Post extends HiveObject {
+  @HiveField(0)
+  final String userId;
+
+  @HiveField(1)
+  final String content;
+
+  @HiveField(2)
+  final String? imageUrl;
+
+  @HiveField(3)
+  final DateTime timestamp;
+
+  @HiveField(4)
+  final List<String> likes;
+
+  @HiveField(5)
+  final List<Comment> comments;
+
+  @HiveField(6)
+  final int shareCount; // ✅ Added field
+
+  Post({
+    required this.userId,
+    required this.content,
+    this.imageUrl,
+    required this.timestamp,
     required this.likes,
     required this.comments,
-    required this.shares,
+    required this.shareCount, // ✅ Add this to constructor
   });
 }

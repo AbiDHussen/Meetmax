@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:meetmax/models/models.dart';
 
 class StoriesSection extends StatelessWidget {
-  final List<Story> stories;
+  final List<DummyStory> stories;
 
   const StoriesSection({super.key, required this.stories});
 

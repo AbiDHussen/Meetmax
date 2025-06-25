@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meetmax/data/data.dart';
-import 'package:meetmax/widgets/create_post_container.dart';
-import 'package:meetmax/widgets/post_container.dart';
-import 'package:meetmax/widgets/stories_section.dart';
-import 'package:meetmax/widgets/top_bar_section.dart';
+import 'package:meetmax/models/dummy_post.dart';
+import 'package:meetmax/widgets/feed/bottom_bar_section.dart';
+import 'package:meetmax/widgets/feed/create_post_container.dart';
+import 'package:meetmax/widgets/feed/post_container.dart';
+import 'package:meetmax/widgets/feed/stories_section.dart';
+import 'package:meetmax/widgets/feed/top_bar_section.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({super.key});
@@ -46,8 +48,10 @@ class FeedPage extends StatelessWidget {
             height: 10,
             color: Colors.grey.shade50,
           ),
-          
-          PostContainer(posts: posts)
+
+          PostContainer(posts: dummyPosts),
+
+          BottomBarSection(currentIndex: 0, onTap: (int index) {  })
         ],
       ),
     );

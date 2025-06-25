@@ -4,7 +4,7 @@ import 'package:meetmax/models/models.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PostContainer extends StatelessWidget {
-  final List<Post> posts;
+  final List<DummyPost> posts;
 
   const PostContainer({super.key, required this.posts});
 
@@ -24,7 +24,7 @@ class PostContainer extends StatelessWidget {
     );
   }
 
-  Widget _buildPostCard(Post post) {
+  Widget _buildPostCard(DummyPost post) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
@@ -60,12 +60,12 @@ class PostContainer extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               Text(
-                "${post.likes}",
+                "${post.likes.length}",
                 style: const TextStyle(fontSize: 14, color: Colors.black87),
               ),
               const Spacer(),
               Text(
-                "${post.comments} Comments",
+                "${post.comments.length} Comments",
                 style: const TextStyle(fontSize: 14, color: Colors.black87),
               ),
               const SizedBox(width: 12),
@@ -136,7 +136,7 @@ class PostContainer extends StatelessWidget {
 }
 
 class _PostHeader extends StatelessWidget {
-  final User user;
+  final DummyUser user;
   final String timeAgo;
 
   const _PostHeader({required this.user, required this.timeAgo});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meetmax/widgets/custom_text_field.dart';
-import 'package:meetmax/widgets/custom_elevated_button.dart';
+import 'package:meetmax/widgets/customButtonAndTextfield/custom_text_field.dart';
+import 'package:meetmax/widgets/customButtonAndTextfield/custom_elevated_button.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);

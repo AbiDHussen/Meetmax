@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:meetmax/models/dummy_user.dart';
 import 'package:meetmax/models/user.dart';
+import 'package:meetmax/screens/create_post_screen.dart';
 
 class CreatePostContainer extends StatelessWidget {
-  final User currentUser;
+  final DummyUser currentUser;
 
   const CreatePostContainer({super.key, required this.currentUser});
 
@@ -36,23 +38,32 @@ class CreatePostContainer extends StatelessWidget {
               ),
               const SizedBox(width: 10),
 
-              // Input Field
+// Input Field with Navigation to CreatePostScreen
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    "What's happening?",
-                    style: TextStyle(color: Colors.grey),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CreatePostScreen()),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text(
+                      "What's happening?",
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
                 ),
               ),
+
             ],
           ),
 

@@ -1,3 +1,3 @@
-export 'user.dart';
-export 'story.dart';
-export 'post.dart';
+export 'dummy_user.dart';
+export 'dummy_story.dart';
+export 'dummy_post.dart';

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meetmax/widgets/custom_text_field.dart';
-import 'package:meetmax/widgets/social_button.dart';
-import 'package:meetmax/widgets/custom_elevated_button.dart';
+import 'package:meetmax/screens/login_screen.dart';
+import 'package:meetmax/widgets/customButtonAndTextfield/custom_text_field.dart';
+import 'package:meetmax/widgets/customButtonAndTextfield/social_button.dart';
+import 'package:meetmax/widgets/customButtonAndTextfield/custom_elevated_button.dart';
+import 'package:meetmax/services/auth_service.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -16,6 +18,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _dobController = TextEditingController();
+  final AuthService _authService = AuthService();
+
 
   String _selectedGender = 'Male';
   String _selectedLanguage = 'English (UK)';
@@ -260,8 +264,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // 🔹 Sign Up Button
                       CustomElevatedButton(
                         text: 'Sign Up',
-                        onPressed: () {
-                          // TODO: Handle sign up
+                        onPressed: () async {
+                          final success = await _authService.signUp(
+                            name: _nameController.text.trim(),
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text,
+                            imageUrl: '', // Placeholder or default URL
+                            birthDate: DateTime.parse(_dobController.text.trim()),
+
+                            gender: _selectedGender,
+                          );
+
+                          if (success) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Sign up successful!')),
+                            );
+                            // Navigate to home or main screen
+                            // Navigate to login screen
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Email already exists!')),
+                            );
+                          }
                         },
                       ),
                       const SizedBox(height: 16),
@@ -273,7 +300,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const Text("Already have an account? "),
                           GestureDetector(
                             onTap: () {
-                              // TODO: Navigate to Sign In screen
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                              );
                             },
                             child: const Text(
                               'Sign In',

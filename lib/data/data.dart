@@ -1,232 +1,183 @@
-import 'package:meetmax/models/models.dart';
+import 'package:meetmax/models/dummy_post.dart';
+import 'package:meetmax/models/dummy_user.dart';
+import 'package:meetmax/models/dummy_comment.dart';
+import 'package:meetmax/models/dummy_story.dart';
 
-final User currentUser = User(
+// Dummy users
+final DummyUser currentUser = DummyUser(
   name: 'Marcus Ng',
+  email: 'marcus@gmail.com',
+  password: 'marcus123',
   imageUrl:
-  'https://images.unsplash.com/photo-1578133671540-edad0b3d689e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80',
+  'https://images.unsplash.com/photo-1578133671540-edad0b3d689e?auto=format&fit=crop&w=1351&q=80',
+  birthDate: DateTime(1990, 5, 14),
+  gender: 'Male',
 );
 
-final List<User> onlineUsers = [
-  User(
+final List<DummyUser> onlineUsers = [
+  DummyUser(
     name: 'David Brooks',
+    email: 'david.brooks@example.com',
+    password: 'password123',
     imageUrl:
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=634&q=80',
+    birthDate: DateTime(1990, 5, 14),
+    gender: 'Male',
   ),
-  User(
+  DummyUser(
     name: 'Jane Doe',
+    email: 'jane.doe@example.com',
+    password: 'securePass456',
     imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=634&q=80',
+    birthDate: DateTime(1995, 8, 21),
+    gender: 'Female',
   ),
-  User(
-    name: 'Matthew Hinkle',
-    imageUrl:
-    'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1331&q=80',
-  ),
-  User(
+  DummyUser(
     name: 'Amy Smith',
+    email: 'amy.smith@example.com',
+    password: 'amysmith123',
     imageUrl:
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80',
+    birthDate: DateTime(1993, 12, 5),
+    gender: 'Female',
   ),
-  User(
-    name: 'Ed Morris',
-    imageUrl:
-    'https://images.unsplash.com/photo-1521119989659-a83eee488004?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=664&q=80',
-  ),
-  User(
-    name: 'Carolyn Duncan',
-    imageUrl:
-    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  ),
-  User(
+  DummyUser(
     name: 'Paul Pinnock',
+    email: 'paul.pinnock@example.com',
+    password: 'pinnockPW',
     imageUrl:
-    'https://images.unsplash.com/photo-1519631128182-433895475ffe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    'https://images.unsplash.com/photo-1519631128182-433895475ffe?auto=format&fit=crop&w=1350&q=80',
+    birthDate: DateTime(1989, 7, 9),
+    gender: 'Male',
   ),
-  User(
-      name: 'Elizabeth Wong',
-      imageUrl:
-      'https://images.unsplash.com/photo-1515077678510-ce3bdf418862?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=675&q=80'),
-  User(
-    name: 'James Lathrop',
+  DummyUser(
+    name: 'Elizabeth Wong',
+    email: 'elizabeth.wong@example.com',
+    password: 'wongStrong!',
     imageUrl:
-    'https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=592&q=80',
-  ),
-  User(
-    name: 'Jessie Samson',
-    imageUrl:
-    'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  ),
-  User(
-    name: 'David Brooks',
-    imageUrl:
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  ),
-  User(
-    name: 'Jane Doe',
-    imageUrl:
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  ),
-  User(
-    name: 'Matthew Hinkle',
-    imageUrl:
-    'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1331&q=80',
-  ),
-  User(
-    name: 'Amy Smith',
-    imageUrl:
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
-  ),
-  User(
-    name: 'Ed Morris',
-    imageUrl:
-    'https://images.unsplash.com/photo-1521119989659-a83eee488004?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=664&q=80',
-  ),
-  User(
-    name: 'Carolyn Duncan',
-    imageUrl:
-    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  ),
-  User(
-    name: 'Paul Pinnock',
-    imageUrl:
-    'https://images.unsplash.com/photo-1519631128182-433895475ffe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-  ),
-  User(
-      name: 'Elizabeth Wong',
-      imageUrl:
-      'https://images.unsplash.com/photo-1515077678510-ce3bdf418862?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=675&q=80'),
-  User(
-    name: 'James Lathrop',
-    imageUrl:
-    'https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=592&q=80',
-  ),
-  User(
-    name: 'Jessie Samson',
-    imageUrl:
-    'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+    'https://images.unsplash.com/photo-1515077678510-ce3bdf418862?auto=format&fit=crop&w=675&q=80',
+    birthDate: DateTime(1994, 3, 3),
+    gender: 'Female',
   ),
 ];
 
-final List<Story> stories = [
-  Story(
-      user: currentUser,
-      imageUrl: currentUser.imageUrl
+// Likes
+List<String> allUsernames = [
+  currentUser.name,
+  ...onlineUsers.map((user) => user.name),
+];
+
+// Comments
+final List<DummyComment> sampleComments = [
+  DummyComment(
+    userId: 'Jane Doe',
+    text: 'Amazing photo!',
+    timestamp: DateTime.now().subtract(Duration(minutes: 10)),
   ),
-  Story(
-    user: onlineUsers[2],
-    imageUrl:
-    'https://images.unsplash.com/photo-1498307833015-e7b400441eb8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=80',
+  DummyComment(
+    userId: 'David Brooks',
+    text: 'Looks great!',
+    timestamp: DateTime.now().subtract(Duration(hours: 1)),
   ),
-  Story(
-    user: onlineUsers[6],
-    imageUrl:
-    'https://images.unsplash.com/photo-1499363536502-87642509e31b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    isViewed: true,
+  DummyComment(
+    userId: 'Amy Smith',
+    text: 'What a view 😍',
+    timestamp: DateTime.now().subtract(Duration(hours: 2)),
   ),
-  Story(
-    user: onlineUsers[3],
-    imageUrl:
-    'https://images.unsplash.com/photo-1497262693247-aa258f96c4f5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=624&q=80',
+  DummyComment(
+    userId: 'Paul Pinnock',
+    text: 'Nice one!',
+    timestamp: DateTime.now().subtract(Duration(hours: 3)),
   ),
-  Story(
-    user: onlineUsers[9],
-    imageUrl:
-    'https://images.unsplash.com/photo-1496950866446-3253e1470e8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-    isViewed: true,
+  DummyComment(
+    userId: 'Elizabeth Wong',
+    text: 'So cool!',
+    timestamp: DateTime.now().subtract(Duration(hours: 4)),
   ),
-  Story(
-    user: onlineUsers[7],
-    imageUrl:
-    'https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
-  ),
-  Story(
-    user: onlineUsers[2],
-    imageUrl:
-    'https://images.unsplash.com/photo-1498307833015-e7b400441eb8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=80',
-  ),
-  Story(
-    user: onlineUsers[6],
-    imageUrl:
-    'https://images.unsplash.com/photo-1499363536502-87642509e31b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    isViewed: true,
-  ),
-  Story(
-    user: onlineUsers[3],
-    imageUrl:
-    'https://images.unsplash.com/photo-1497262693247-aa258f96c4f5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=624&q=80',
-  ),
-  Story(
-    user: onlineUsers[9],
-    imageUrl:
-    'https://images.unsplash.com/photo-1496950866446-3253e1470e8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-    isViewed: true,
-  ),
-  Story(
-    user: onlineUsers[7],
-    imageUrl:
-    'https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
+  DummyComment(
+    userId: 'Marcus Ng',
+    text: 'Wow, love this!',
+    timestamp: DateTime.now().subtract(Duration(hours: 5)),
   ),
 ];
 
-final List<Post> posts = [
-  Post(
+// Posts
+final List<DummyPost> dummyPosts = [
+  DummyPost(
     user: currentUser,
-    caption: 'Check out these cool puppers',
-    timeAgo: '58m',
-    imageUrl: 'https://images.unsplash.com/photo-1525253086316-d0c936c814f8',
-    likes: 1202,
-    comments: 184,
-    shares: 96,
+    caption: 'Just enjoying some sunshine ☀️',
+    timeAgo: '2h',
+    imageUrl: 'https://images.unsplash.com/photo-1525253086316-d0c936c814f8?auto=format&fit=crop&w=1350&q=80',
+    likes: allUsernames.sublist(0, 5),
+    comments: sampleComments.sublist(0, 3),
+    shares: 10,
   ),
-  Post(
-    user: onlineUsers[5],
-    caption:
-    'Please enjoy this placeholder text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    timeAgo: '3hr',
-    imageUrl:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    likes: 683,
-    comments: 79,
-    shares: 18,
-  ),
-  Post(
-    user: onlineUsers[4],
-    caption: 'This is a very good boi.',
-    timeAgo: '8hr',
-    imageUrl:
-    'https://images.unsplash.com/photo-1575535468632-345892291673?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    likes: 894,
-    comments: 201,
-    shares: 27,
-  ),
-  Post(
-    user: onlineUsers[3],
-    caption: 'Adventure 🏔',
-    timeAgo: '15hr',
-    imageUrl:
-    'https://images.unsplash.com/photo-1573331519317-30b24326bb9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-    likes: 722,
-    comments: 183,
-    shares: 42,
-  ),
-  Post(
+  DummyPost(
     user: onlineUsers[0],
-    caption:
-    'More placeholder text for the soul: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    timeAgo: '1d',
-    imageUrl:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-
-    likes: 482,
-    comments: 37,
-    shares: 9,
+    caption: 'Chillin’ by the beach 🌊',
+    timeAgo: '5h',
+    imageUrl: 'https://images.unsplash.com/photo-1573331519317-30b24326bb9a?auto=format&fit=crop&w=1350&q=80',
+    likes: allUsernames.sublist(1, 6),
+    comments: sampleComments.sublist(1, 4),
+    shares: 8,
   ),
-  Post(
-    user: onlineUsers[9],
-    caption: 'A classic.',
+  DummyPost(
+    user: onlineUsers[1],
+    caption: 'Adventure time in the mountains 🏞',
     timeAgo: '1d',
-    imageUrl:
-    'https://images.unsplash.com/reserve/OlxPGKgRUaX0E1hg3b3X_Dumbo.JPG?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    likes: 1523,
-    shares: 129,
-    comments: 301,
-  )
+    imageUrl: 'https://images.unsplash.com/photo-1575535468632-345892291673?auto=format&fit=crop&w=634&q=80',
+    likes: allUsernames.sublist(0, 5),
+    comments: sampleComments.sublist(2, 5),
+    shares: 15,
+  ),
+];
+
+// Stories
+final List<DummyStory> stories = [
+  DummyStory(user: currentUser, imageUrl: currentUser.imageUrl),
+  DummyStory(
+    user: onlineUsers[2],
+    imageUrl: 'https://images.unsplash.com/photo-1498307833015-e7b400441eb8?auto=format&fit=crop&w=1400&q=80',
+  ),
+  DummyStory(
+    user: onlineUsers[3],
+    imageUrl: 'https://images.unsplash.com/photo-1499363536502-87642509e31b?auto=format&fit=crop&w=634&q=80',
+    isViewed: true,
+  ),
+  DummyStory(
+    user: onlineUsers[1],
+    imageUrl: 'https://images.unsplash.com/photo-1497262693247-aa258f96c4f5?auto=format&fit=crop&w=624&q=80',
+  ),
+  DummyStory(
+    user: onlineUsers[4],
+    imageUrl: 'https://images.unsplash.com/photo-1496950866446-3253e1470e8e?auto=format&fit=crop&w=1350&q=80',
+    isViewed: true,
+  ),
+  DummyStory(
+    user: onlineUsers[0],
+    imageUrl: 'https://images.unsplash.com/photo-1475688621402-4257c812d6db?auto=format&fit=crop&w=1267&q=80',
+  ),
+  DummyStory(
+    user: onlineUsers[2],
+    imageUrl: 'https://images.unsplash.com/photo-1498307833015-e7b400441eb8?auto=format&fit=crop&w=1400&q=80',
+  ),
+  DummyStory(
+    user: onlineUsers[3],
+    imageUrl: 'https://images.unsplash.com/photo-1499363536502-87642509e31b?auto=format&fit=crop&w=634&q=80',
+    isViewed: true,
+  ),
+  DummyStory(
+    user: onlineUsers[1],
+    imageUrl: 'https://images.unsplash.com/photo-1497262693247-aa258f96c4f5?auto=format&fit=crop&w=624&q=80',
+  ),
+  DummyStory(
+    user: onlineUsers[4],
+    imageUrl: 'https://images.unsplash.com/photo-1496950866446-3253e1470e8e?auto=format&fit=crop&w=1350&q=80',
+    isViewed: true,
+  ),
+  DummyStory(
+    user: onlineUsers[0],
+    imageUrl: 'https://images.unsplash.com/photo-1475688621402-4257c812d6db?auto=format&fit=crop&w=1267&q=80',
+  ),
 ];

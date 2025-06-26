@@ -51,7 +51,7 @@ class _MiddleSectionState extends State<MiddleSection> {
       timestamp: DateTime.now(),
       likes: [],
       comments: [],
-      shareCount: Random().nextInt(100),
+      shareCount: 0,
     );
 
     await PostService().createPost(newPost);

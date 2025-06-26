@@ -19,6 +19,7 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(PostAdapter());
   Hive.registerAdapter(StoryAdapter());
+  Hive.registerAdapter(CommentAdapter());
 
   await Hive.openBox<User>('users');
   await Hive.openBox('auth'); // 🛑 This is usually the one people forget

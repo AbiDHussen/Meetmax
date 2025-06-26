@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meetmax/data/data.dart';
-import 'package:meetmax/models/dummy_post.dart';
+import 'package:meetmax/models/post.dart';
+import 'package:meetmax/services/post_service.dart';
 import 'package:meetmax/widgets/feed/bottom_bar_section.dart';
 import 'package:meetmax/widgets/feed/create_post_container.dart';
 import 'package:meetmax/widgets/feed/post_container.dart';
+import 'package:meetmax/widgets/feed/real_post_container.dart';
 import 'package:meetmax/widgets/feed/stories_section.dart';
 import 'package:meetmax/widgets/feed/top_bar_section.dart';
 
@@ -12,6 +14,9 @@ class FeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PostService postService = PostService();
+    final List<Post> realPosts = postService.getAllPosts();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: ListView(
@@ -20,38 +25,34 @@ class FeedPage extends StatelessWidget {
           // 🔹 Top bar
           TopBarSection(currentUser: currentUser),
 
-          // 🔹 Soft divider
           const SizedBox(height: 10),
-          Container(
-            height: 10,
-            color: Colors.grey.shade50,
-          ),
+          Container(height: 10, color: Colors.grey.shade50),
           const SizedBox(height: 10),
 
           // 🔹 Stories
           StoriesSection(stories: stories),
 
-          // 🔹 Soft divider
           const SizedBox(height: 10),
-          Container(
-            height: 10,
-            color: Colors.grey.shade50,
-          ),
+          Container(height: 10, color: Colors.grey.shade50),
           const SizedBox(height: 10),
 
           // 🔹 Create Post
           CreatePostContainer(currentUser: currentUser),
 
-          // 🔹 Optional bottom divider
           const SizedBox(height: 10),
-          Container(
-            height: 10,
-            color: Colors.grey.shade50,
-          ),
+          Container(height: 10, color: Colors.grey.shade50),
 
+
+
+    // 🔹 Real Posts from Hive
+          if (realPosts.isNotEmpty)
+            RealPostContainer(posts: realPosts),
+
+          // 🔹 Dummy Posts
           PostContainer(posts: dummyPosts),
 
-          BottomBarSection(currentIndex: 0, onTap: (int index) {  })
+          const SizedBox(height: 12),
+          BottomBarSection(currentIndex: 0, onTap: (int index) {}),
         ],
       ),
     );

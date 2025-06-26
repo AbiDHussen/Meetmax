@@ -9,6 +9,11 @@ class PostService {
     await postBox.add(post);
   }
 
+  Future<void> deleteAllPosts() async {
+    await postBox.clear();
+  }
+
+
   List<Post> getAllPosts() {
     return postBox.values.toList().reversed.toList(); // latest first
   }

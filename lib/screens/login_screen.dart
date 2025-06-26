@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:meetmax/screens/signup_screen.dart';
 import 'package:meetmax/services/auth_service.dart';
 import 'package:meetmax/widgets/customButtonAndTextfield/custom_text_field.dart';
 import 'package:meetmax/widgets/customButtonAndTextfield/social_button.dart';
@@ -239,6 +240,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           GestureDetector(
                             onTap: () {
                               // TODO: Navigate to Sign Up screen
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                              );
                             },
                             child: const Text(
                               'Sign Up',

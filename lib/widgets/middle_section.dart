@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meetmax/data/data.dart';
 import 'package:meetmax/models/post.dart';
 import 'package:meetmax/models/comment.dart';
+import 'package:meetmax/screens/feed_screen.dart';
 import 'package:meetmax/services/post_service.dart';
 import 'dart:math';
+import 'package:hive/hive.dart';
+
 
 class MiddleSection extends StatefulWidget {
   final String visibility;
@@ -31,14 +34,24 @@ class _MiddleSectionState extends State<MiddleSection> {
       return;
     }
 
+    final authBox = Hive.box('auth');
+    final currentEmail = authBox.get('currentUserEmail');
+
+    if (currentEmail == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No logged in user found')),
+      );
+      return;
+    }
+
     final newPost = Post(
-      userId: currentUser.email,
+      userId: currentEmail,
       content: content,
-      imageUrl: null, // add image logic later
+      imageUrl: null,
       timestamp: DateTime.now(),
       likes: [],
       comments: [],
-      shareCount: Random().nextInt(100), // random share count
+      shareCount: Random().nextInt(100),
     );
 
     await PostService().createPost(newPost);
@@ -47,11 +60,25 @@ class _MiddleSectionState extends State<MiddleSection> {
       const SnackBar(content: Text('Post created successfully')),
     );
 
-    Navigator.pop(context); // Go back after posting
+    // ✅ Replace current screen with a refreshed FeedPage
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const FeedPage()),
+    );
   }
+
+
 
   @override
   Widget build(BuildContext context) {
+    // // Debug user info
+    // debugPrint("👤 Current User Info:");
+    // debugPrint("Name: ${currentUser.name}");
+    // debugPrint("Email: ${currentUser.email}");
+    // debugPrint("Image URL: ${currentUser.imageUrl}");
+    // debugPrint("Gender: ${currentUser.gender}");
+    // debugPrint("Birth Date: ${currentUser.birthDate}");
+
     return Column(
       children: [
         // Top bar

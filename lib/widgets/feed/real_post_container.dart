@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:meetmax/models/post.dart';
-import 'package:meetmax/models/models.dart';
+import 'package:meetmax/models/user.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:meetmax/services/user_service.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
-class PostContainer extends StatelessWidget {
-  final List<DummyPost> posts;
+class RealPostContainer extends StatelessWidget {
+  final List<Post> posts;
 
-  const PostContainer({super.key, required this.posts});
+  const RealPostContainer({super.key, required this.posts});
+
+  // Define default user in case the actual user is not found
+  User get defaultUser => User(
+    name: 'Unknown User',
+    email: 'unknown@example.com',
+    imageUrl: 'https://via.placeholder.com/150',
+    gender: 'N/A',
+    birthDate: DateTime(2000, 1, 1), password: '',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +35,9 @@ class PostContainer extends StatelessWidget {
     );
   }
 
-  Widget _buildPostCard(DummyPost post) {
+  Widget _buildPostCard(Post post) {
+    final User user = UserService().getUserById(post.userId) ?? defaultUser;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
@@ -35,22 +48,22 @@ class PostContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _PostHeader(user: post.user, timeAgo: post.timeAgo),
+          _PostHeader(user: user, timeAgo: timeago.format(post.timestamp)),
           const SizedBox(height: 10),
-          if (post.caption.isNotEmpty)
-            Text(post.caption, style: const TextStyle(fontSize: 16)),
-          if (post.imageUrl.isNotEmpty) ...[
+          if (post.content.isNotEmpty)
+            Text(post.content, style: const TextStyle(fontSize: 16)),
+          if (post.imageUrl != null && post.imageUrl!.isNotEmpty) ...[
             const SizedBox(height: 10),
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(post.imageUrl),
+              child: Image.network(post.imageUrl!),
             ),
           ],
           const SizedBox(height: 10),
           Row(
             children: [
-              Row(
-                children: const [
+              const Row(
+                children: [
                   FaIcon(FontAwesomeIcons.solidHeart, size: 18, color: Colors.red),
                   SizedBox(width: 4),
                   FaIcon(FontAwesomeIcons.faceGrinHearts, size: 18, color: Colors.orange),
@@ -70,7 +83,7 @@ class PostContainer extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Text(
-                "${post.shares} Shares",
+                "${post.shareCount} Shares",
                 style: const TextStyle(fontSize: 14, color: Colors.black87),
               ),
             ],
@@ -136,22 +149,13 @@ class PostContainer extends StatelessWidget {
 }
 
 class _PostHeader extends StatelessWidget {
-  final DummyUser user;
+  final User user;
   final String timeAgo;
 
   const _PostHeader({required this.user, required this.timeAgo});
 
   @override
   Widget build(BuildContext context) {
-
-    //  Print all user info for debugging
-    // debugPrint('🔍 User Info:');
-    // debugPrint('Name: ${user.name}');
-    // debugPrint('Email: ${user.email}');
-    // debugPrint('Image URL: ${user.imageUrl}');
-    // debugPrint('Birthdate: ${user.birthDate}');
-    // debugPrint('Gender: ${user.gender}');
-
     return Row(
       children: [
         CircleAvatar(backgroundImage: NetworkImage(user.imageUrl)),

@@ -35,17 +35,17 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    final user = userBox.values.firstWhere(
-          (u) => u.email == email && u.password == password,
-      orElse: () => throw Exception('User not found'),
-    );
-
-    if (user != null) {
+    try {
+      final user = userBox.values.firstWhere(
+            (u) => u.email == email && u.password == password,
+      );
       authBox.put('currentUserEmail', email);
       return true;
+    } catch (_) {
+      return false; // login failed
     }
-    return false;
   }
+
 
 
 

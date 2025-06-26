@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:meetmax/debug_helper.dart';
 import 'package:meetmax/models/comment.dart';
 import 'package:meetmax/models/post.dart';
 import 'package:meetmax/models/story.dart';
@@ -24,7 +25,8 @@ void main() async {
   await Hive.openBox<Post>('posts');
   await Hive.openBox<Story>('stories');
   await Hive.openBox<Comment>('comments');
-
+  // Uncomment for test resets:
+  // await clearAllData();
   runApp(const MeetmaxApp());
 }
 

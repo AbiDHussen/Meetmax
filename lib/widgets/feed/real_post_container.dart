@@ -1,3 +1,5 @@
+// 🛠️ Add fallback logic to images for profile and post images
+
 import 'package:flutter/material.dart';
 import 'package:meetmax/models/comment.dart';
 import 'package:meetmax/models/post.dart';
@@ -6,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meetmax/services/user_service.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:hive/hive.dart';
+import 'dart:io';
 
 class RealPostContainer extends StatelessWidget {
   final List<Post> posts;
@@ -15,9 +18,10 @@ class RealPostContainer extends StatelessWidget {
   User get defaultUser => User(
     name: 'Unknown User',
     email: 'unknown@example.com',
-    imageUrl: 'https://via.placeholder.com/150',
+    imageUrl: '', // Keep empty to trigger fallback
     gender: 'N/A',
-    birthDate: DateTime(2000, 1, 1), password: '',
+    birthDate: DateTime(2000, 1, 1),
+    password: '',
   );
 
   @override
@@ -26,10 +30,7 @@ class RealPostContainer extends StatelessWidget {
       children: List.generate(
         posts.length,
             (index) => Padding(
-          padding: EdgeInsets.only(
-            top: index == 0 ? 0 : 8,
-            bottom: 8,
-          ),
+          padding: EdgeInsets.only(top: index == 0 ? 0 : 8, bottom: 8),
           child: _PostCard(post: posts[index], defaultUser: defaultUser),
         ),
       ),
@@ -70,7 +71,7 @@ class _PostCardState extends State<_PostCard> {
       } else {
         post.likes.add(currentUserEmail!);
       }
-      post.save(); // Persist changes to Hive
+      post.save();
     });
   }
 
@@ -102,7 +103,11 @@ class _PostCardState extends State<_PostCard> {
                       final comment = post.comments[index];
                       final commentUser = UserService().getUserById(comment.userId) ?? widget.defaultUser;
                       return ListTile(
-                        leading: CircleAvatar(backgroundImage: NetworkImage(commentUser.imageUrl)),
+                        leading: CircleAvatar(
+                          backgroundImage: commentUser.imageUrl.isNotEmpty
+                              ? NetworkImage(commentUser.imageUrl)
+                              : const AssetImage('assets/images/default_user.png') as ImageProvider,
+                        ),
                         title: Text(commentUser.name),
                         subtitle: Text(comment.text),
                         trailing: Text(
@@ -133,10 +138,10 @@ class _PostCardState extends State<_PostCard> {
                             text: commentText,
                             timestamp: DateTime.now(),
                           ));
-                          post.save(); // Persist
+                          post.save();
                         });
 
-                        Navigator.pop(context); // Close bottom sheet
+                        Navigator.pop(context);
                       },
                     ),
                   ],
@@ -148,7 +153,6 @@ class _PostCardState extends State<_PostCard> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +174,7 @@ class _PostCardState extends State<_PostCard> {
             const SizedBox(height: 10),
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(post.imageUrl!),
+              child: Image.file(File(post.imageUrl!)),
             ),
           ],
           const SizedBox(height: 10),
@@ -254,19 +258,17 @@ class _PostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(backgroundImage: NetworkImage(user.imageUrl)),
+        CircleAvatar(
+          backgroundImage: user.imageUrl.isNotEmpty
+              ? NetworkImage(user.imageUrl)
+              : const AssetImage('assets/images/default_user.png') as ImageProvider,
+        ),
         const SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              user.name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "$timeAgo · Public",
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
-            ),
+            Text(user.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text("$timeAgo · Public", style: const TextStyle(fontSize: 12, color: Colors.grey)),
           ],
         ),
         const Spacer(),

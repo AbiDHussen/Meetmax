@@ -9,7 +9,7 @@ final DummyUser currentUser = DummyUser(
   email: 'marcus@gmail.com',
   password: 'marcus123',
   imageUrl:
-  'https://images.unsplash.com/photo-1578133671540-edad0b3d689e?auto=format&fit=crop&w=1351&q=80',
+  'https://i.postimg.cc/QtjSJ03z/default-user.png',
   birthDate: DateTime(1990, 5, 14),
   gender: 'Male',
 );
@@ -135,7 +135,7 @@ final List<DummyPost> dummyPosts = [
 
 // Stories
 final List<DummyStory> stories = [
-  DummyStory(user: currentUser, imageUrl: currentUser.imageUrl),
+  DummyStory(user: currentUser, imageUrl: 'currentUser.imageUrl'),
   DummyStory(
     user: onlineUsers[2],
     imageUrl: 'https://images.unsplash.com/photo-1498307833015-e7b400441eb8?auto=format&fit=crop&w=1400&q=80',

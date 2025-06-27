@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:meetmax/models/user.dart';
+import 'package:meetmax/screens/feed_screen.dart'; // Make sure this import is correct
 
 class AuthService {
   final Box<User> userBox = Hive.box<User>('users');
@@ -30,7 +32,6 @@ class AuthService {
     return true;
   }
 
-  /// ✅ Sign In method
   Future<bool> signIn({
     required String email,
     required String password,
@@ -42,12 +43,9 @@ class AuthService {
       authBox.put('currentUserEmail', email);
       return true;
     } catch (_) {
-      return false; // login failed
+      return false;
     }
   }
-
-
-
 
   User? getCurrentUser() {
     final email = authBox.get('currentUserEmail');
@@ -59,4 +57,17 @@ class AuthService {
   }
 
   void logout() => authBox.delete('currentUserEmail');
+
+  /// ✅ Auto login if user session exists
+  void checkAutoLogin(BuildContext context) {
+    final rememberedEmail = authBox.get('currentUserEmail');
+
+    if (rememberedEmail != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const FeedPage()),
+        );
+      });
+    }
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:meetmax/screens/forgot_password_screen.dart';
 import 'package:meetmax/screens/signup_screen.dart';
 import 'package:meetmax/services/auth_service.dart';
 import 'package:meetmax/widgets/customButtonAndTextfield/custom_text_field.dart';
@@ -194,6 +196,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextButton(
                             onPressed: () {
                               // TODO: Navigate to Forgot Password Screen
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
+                              );
                             },
                             child: const Text(
                               'Forgot Password?',
@@ -207,27 +212,38 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       CustomElevatedButton(
                         text: 'Sign In',
-                        onPressed: () async {
-                          final success = await _authService.signIn(
-                            email: _emailController.text.trim(),
-                            password: _passwordController.text.trim(),
-                          );
+                          onPressed: () async {
+                            final email = _emailController.text.trim();
+                            final password = _passwordController.text.trim();
 
-                          if (success) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Login successful')),
-                            );
+                            final success = await _authService.signIn(email: email, password: password);
 
-                            // Navigate to FeedPage
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => const FeedPage()),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Invalid email or password')),
-                            );
+                            if (success) {
+                              final authBox = Hive.box('auth');
+
+                              if (_rememberMe) {
+                                // Save session
+                                authBox.put('currentUserEmail', email);
+                              } else {
+                                // Clear session on every login if not remembered
+                                authBox.delete('currentUserEmail');
+                              }
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Login successful')),
+                              );
+
+                              // Navigate to FeedPage
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => const FeedPage()),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Invalid email or password')),
+                              );
+                            }
                           }
-                        },
+
 
                       ),
 

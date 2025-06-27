@@ -1,12 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meetmax/data/data.dart';
 import 'package:meetmax/models/post.dart';
-import 'package:meetmax/models/comment.dart';
 import 'package:meetmax/screens/feed_screen.dart';
 import 'package:meetmax/services/post_service.dart';
-import 'dart:math';
 import 'package:hive/hive.dart';
-
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 class MiddleSection extends StatefulWidget {
   final String visibility;
@@ -24,12 +25,28 @@ class MiddleSection extends StatefulWidget {
 
 class _MiddleSectionState extends State<MiddleSection> {
   final TextEditingController _postController = TextEditingController();
+  File? _selectedImage;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+
+    if (picked != null) {
+      final dir = await getApplicationDocumentsDirectory();
+      final name = p.basename(picked.path); // ✅ use p.basename
+      final saved = await File(picked.path).copy('${dir.path}/$name');
+
+      setState(() {
+        _selectedImage = saved;
+      });
+    }
+  }
 
   void _handlePost() async {
     final content = _postController.text.trim();
-    if (content.isEmpty) {
+    if (content.isEmpty && _selectedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Post content cannot be empty')),
+        const SnackBar(content: Text('Post content or image required')),
       );
       return;
     }
@@ -47,7 +64,7 @@ class _MiddleSectionState extends State<MiddleSection> {
     final newPost = Post(
       userId: currentEmail,
       content: content,
-      imageUrl: null,
+      imageUrl: _selectedImage?.path,
       timestamp: DateTime.now(),
       likes: [],
       comments: [],
@@ -60,25 +77,14 @@ class _MiddleSectionState extends State<MiddleSection> {
       const SnackBar(content: Text('Post created successfully')),
     );
 
-    // ✅ Replace current screen with a refreshed FeedPage
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const FeedPage()),
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    // // Debug user info
-    // debugPrint("👤 Current User Info:");
-    // debugPrint("Name: ${currentUser.name}");
-    // debugPrint("Email: ${currentUser.email}");
-    // debugPrint("Image URL: ${currentUser.imageUrl}");
-    // debugPrint("Gender: ${currentUser.gender}");
-    // debugPrint("Birth Date: ${currentUser.birthDate}");
-
     return Column(
       children: [
         // Top bar
@@ -91,10 +97,8 @@ class _MiddleSectionState extends State<MiddleSection> {
                 onPressed: () => Navigator.pop(context),
               ),
               const SizedBox(width: 10),
-              const Text(
-                'Create a post',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87),
-              ),
+              const Text('Create a post',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87)),
               const Spacer(),
               const Text('Visible for', style: TextStyle(fontSize: 13, color: Colors.grey)),
               const SizedBox(width: 5),
@@ -168,17 +172,26 @@ class _MiddleSectionState extends State<MiddleSection> {
               ),
 
               const SizedBox(height: 20),
-              const ListTile(
+
+              if (_selectedImage != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.file(_selectedImage!, height: 180),
+                ),
+
+              const SizedBox(height: 20),
+              ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.videocam_outlined, color: Colors.black87),
-                title: Text("Live Video"),
+                leading: const Icon(Icons.videocam_outlined, color: Colors.black87),
+                title: const Text("Live Video"),
                 dense: true,
                 visualDensity: VisualDensity.compact,
               ),
-              const ListTile(
+              ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.photo_library_outlined, color: Colors.black87),
-                title: Text("Photo/Video"),
+                leading: const Icon(Icons.photo_library_outlined, color: Colors.black87),
+                title: const Text("Photo/Video"),
+                onTap: _pickImage,
                 dense: true,
                 visualDensity: VisualDensity.compact,
               ),

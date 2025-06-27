@@ -49,18 +49,9 @@ class PostContainer extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              Row(
-                children: const [
-                  FaIcon(FontAwesomeIcons.solidHeart, size: 18, color: Colors.red),
-                  SizedBox(width: 4),
-                  FaIcon(FontAwesomeIcons.faceGrinHearts, size: 18, color: Colors.orange),
-                  SizedBox(width: 4),
-                  FaIcon(FontAwesomeIcons.thumbsUp, size: 18, color: Colors.blue),
-                ],
-              ),
               const SizedBox(width: 6),
               Text(
-                "${post.likes.length}",
+                "${post.likes.length} Likes",
                 style: const TextStyle(fontSize: 14, color: Colors.black87),
               ),
               const Spacer(),

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meetmax/models/dummy_user.dart';
 import 'package:meetmax/models/user.dart';
+import 'package:meetmax/screens/current_user_profile_info.dart';
 
 class TopBarSection extends StatelessWidget {
   final DummyUser currentUser;
@@ -15,15 +16,24 @@ class TopBarSection extends StatelessWidget {
       child: Row(
         children: [
           // Dynamic Profile Picture
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15), // Adjust radius as needed
-            child: CachedNetworkImage(
-              imageUrl: currentUser.imageUrl,
-              width: 44, // same as diameter of radius 22
-              height: 44,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CurrentUserProfileInfo()),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: CachedNetworkImage(
+                imageUrl: currentUser.imageUrl,
+                width: 44,
+                height: 44,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
+
 
 
           const SizedBox(width: 12),

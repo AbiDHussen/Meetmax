@@ -25,7 +25,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             children: [
               const SizedBox(height: 16),
 
-              /// 🔹 Header Row
+              /// Header Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -42,6 +42,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                     ],
                   ),
+
                   DropdownButton<String>(
                     value: _selectedLanguage,
                     icon: const Icon(Icons.arrow_drop_down),
@@ -51,23 +52,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         _selectedLanguage = newValue!;
                       });
                     },
-                    items: <String>[
-                      'English (UK)',
-                      'English (US)',
-                      'Bangla',
-                    ].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+                    items: <String>['English (UK)', 'English (US)', 'Bangla']
+                        .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        })
+                        .toList(),
                   ),
                 ],
               ),
 
               const SizedBox(height: 48),
 
-              /// 🔹 Title
+              /// Title
               const Center(
                 child: Text(
                   'Forgot password?',
@@ -79,13 +78,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 child: Text(
                   'Enter your details to receive a reset link',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
 
               const SizedBox(height: 32),
 
-              /// 🔹 White Card with Input
+              ///White Card with Input
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -96,7 +98,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       color: Colors.black12,
                       blurRadius: 10,
                       offset: Offset(0, 4),
-                    )
+                    ),
                   ],
                 ),
                 child: Column(
@@ -110,7 +112,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     CustomElevatedButton(
                       text: 'Send',
                       onPressed: () {
-                        // TODO: Send password reset link
+                        //Not Implemented
                       },
                     ),
                     const SizedBox(height: 16),
@@ -125,7 +127,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           SizedBox(width: 4),
                           Text(
                             'Back to Sign In',
-                            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ],
                       ),

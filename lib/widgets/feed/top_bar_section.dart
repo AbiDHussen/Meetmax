@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:meetmax/models/dummy_user.dart';
-import 'package:meetmax/models/user.dart';
+import 'package:meetmax/dummyModels/dummy_user.dart';
 import 'package:meetmax/screens/current_user_profile_info.dart';
 
 class TopBarSection extends StatelessWidget {
@@ -15,12 +14,13 @@ class TopBarSection extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
-          // Dynamic Profile Picture
           GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const CurrentUserProfileInfo()),
+                MaterialPageRoute(
+                  builder: (_) => const CurrentUserProfileInfo(),
+                ),
               );
             },
             child: ClipRRect(
@@ -33,8 +33,6 @@ class TopBarSection extends StatelessWidget {
               ),
             ),
           ),
-
-
 
           const SizedBox(width: 12),
 
@@ -68,7 +66,7 @@ class TopBarSection extends StatelessWidget {
           // Chat Icon
           IconButton(
             onPressed: () {
-              // TODO: Navigate to chat
+              //Not Implemented
             },
             icon: const Icon(Icons.message_outlined, color: Colors.grey),
           ),

@@ -14,12 +14,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   final _emailController = TextEditingController();
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _dobController = TextEditingController();
   final AuthService _authService = AuthService();
-
 
   String _selectedGender = 'Male';
   String _selectedLanguage = 'English (UK)';
@@ -35,8 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 16),
-
-                // 🔹 Top Header with Logo and Language
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -73,9 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 16),
-
                 const Text(
                   'Getting Started',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -89,10 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 24),
-
-                // 🔹 Main Signup Card Container
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
@@ -106,215 +100,250 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ],
                   ),
-                  child: Column(
-                    children: [
-                      // 🔹 Social Login Buttons
-                      Row(
-                        children: [
-                          SocialButton(
-                            text: 'Log in with Google',
-                            icon: const FaIcon(
-                              FontAwesomeIcons.google,
-                              color: Colors.black54,
-                            ),
-                            onPressed: () {},
-                          ),
-                          const SizedBox(width: 12),
-                          SocialButton(
-                            text: 'Log in with Apple',
-                            icon: const FaIcon(
-                              FontAwesomeIcons.apple,
-                              color: Colors.black54,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-
-                      // 🔹 OR Divider
-                      Row(
-                        children: const [
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey,
-                              endIndent: 10,
-                            ),
-                          ),
-                          Text(
-                            "OR",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.grey,
-                              indent: 10,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-
-                      // 🔹 Form Fields
-                      CustomTextField(
-                        controller: _emailController,
-                        label: 'Your Email',
-                        icon: const FaIcon(FontAwesomeIcons.at),
-                      ),
-                      const SizedBox(height: 12),
-                      CustomTextField(
-                        controller: _nameController,
-                        label: 'Your Name',
-                        icon: const FaIcon(FontAwesomeIcons.faceSmile),
-                      ),
-                      const SizedBox(height: 12),
-                      CustomTextField(
-                        controller: _passwordController,
-                        label: 'Create Password',
-                        icon: const FaIcon(FontAwesomeIcons.lock),
-                        obscure: _obscurePassword,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscurePassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _obscurePassword = !_obscurePassword;
-                            });
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      CustomTextField(
-                        controller: _dobController,
-                        label: 'Date of birth',
-                        icon: const Icon(Icons.calendar_today_outlined),
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? picked = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime(2000),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now(),
-                          );
-                          if (picked != null) {
-                            setState(() {
-                              _dobController.text = "${picked.toLocal()}".split(
-                                ' ',
-                              )[0];
-                            });
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 12),
-
-                      // 🔹 Gender Selection
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Row(
                           children: [
-                            const Icon(Icons.male_outlined, color: Colors.grey),
+                            SocialButton(
+                              text: 'Log in with Google',
+                              icon: const FaIcon(
+                                FontAwesomeIcons.google,
+                                color: Colors.black54,
+                              ),
+                              onPressed: () {},
+                            ),
                             const SizedBox(width: 12),
+                            SocialButton(
+                              text: 'Log in with Apple',
+                              icon: const FaIcon(
+                                FontAwesomeIcons.apple,
+                                color: Colors.black54,
+                              ),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: const [
                             Expanded(
-                              child: Row(
-                                children: [
-                                  Radio<String>(
-                                    value: 'Male',
-                                    groupValue: _selectedGender,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedGender = value!;
-                                      });
-                                    },
-                                  ),
-                                  const Text('Male'),
-                                  Radio<String>(
-                                    value: 'Female',
-                                    groupValue: _selectedGender,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedGender = value!;
-                                      });
-                                    },
-                                  ),
-                                  const Text('Female'),
-                                ],
+                              child: Divider(
+                                thickness: 1,
+                                color: Colors.grey,
+                                endIndent: 10,
+                              ),
+                            ),
+                            Text(
+                              "OR",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 1,
+                                color: Colors.grey,
+                                indent: 10,
                               ),
                             ),
                           ],
                         ),
-                      ),
+                        const SizedBox(height: 16),
 
-                      const SizedBox(height: 16),
-
-                      // 🔹 Sign Up Button
-                      CustomElevatedButton(
-                        text: 'Sign Up',
-                        onPressed: () async {
-                          final success = await _authService.signUp(
-                            name: _nameController.text.trim(),
-                            email: _emailController.text.trim(),
-                            password: _passwordController.text,
-                            imageUrl: '', // Placeholder or default URL
-                            birthDate: DateTime.parse(_dobController.text.trim()),
-
-                            gender: _selectedGender,
-                          );
-
-                          if (success) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Sign up successful!')),
+                        CustomTextField(
+                          controller: _emailController,
+                          label: 'Your Email',
+                          icon: const FaIcon(FontAwesomeIcons.at),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Email is required';
+                            }
+                            final emailRegex = RegExp(
+                              r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$',
                             );
-                            // Navigate to home or main screen
-                            // Navigate to login screen
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => const LoginScreen()),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Email already exists!')),
-                            );
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 16),
-
-                      // 🔹 Already Have an Account
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Already have an account? "),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => const LoginScreen()),
-                              );
-                            },
-                            child: const Text(
-                              'Sign In',
-                              style: TextStyle(color: Colors.blue),
+                            if (!emailRegex.hasMatch(value)) {
+                              return 'Enter a valid email';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        CustomTextField(
+                          controller: _nameController,
+                          label: 'Your Name',
+                          icon: const FaIcon(FontAwesomeIcons.faceSmile),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Name is required';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        CustomTextField(
+                          controller: _passwordController,
+                          label: 'Create Password',
+                          icon: const FaIcon(FontAwesomeIcons.lock),
+                          obscure: _obscurePassword,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                             ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
                           ),
-                        ],
-                      ),
-                    ],
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password is required';
+                            }
+                            if (value.length < 6) {
+                              return 'Password must be at least 6 characters';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        CustomTextField(
+                          controller: _dobController,
+                          label: 'Date of birth',
+                          icon: const Icon(Icons.calendar_today_outlined),
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? picked = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime(2000),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now(),
+                            );
+                            if (picked != null) {
+                              setState(() {
+                                _dobController.text = "${picked.toLocal()}"
+                                    .split(' ')[0];
+                              });
+                            }
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select your date of birth';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.male_outlined,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Radio<String>(
+                                      value: 'Male',
+                                      groupValue: _selectedGender,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedGender = value!;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Male'),
+                                    Radio<String>(
+                                      value: 'Female',
+                                      groupValue: _selectedGender,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedGender = value!;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Female'),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        CustomElevatedButton(
+                          text: 'Sign Up',
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              final success = await _authService.signUp(
+                                name: _nameController.text.trim(),
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text,
+                                imageUrl: '',
+                                birthDate: DateTime.parse(
+                                  _dobController.text.trim(),
+                                ),
+                                gender: _selectedGender,
+                              );
+
+                              if (success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Sign up successful!'),
+                                  ),
+                                );
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Email already exists!'),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Already have an account? "),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'Sign In',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-
                 const SizedBox(height: 24),
               ],
             ),

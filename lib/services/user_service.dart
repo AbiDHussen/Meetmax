@@ -8,7 +8,7 @@ class UserService {
     try {
       return userBox.values.firstWhere((user) => user.email == email);
     } catch (e) {
-      return null; // gracefully return null if not found
+      return null;
     }
   }
 }

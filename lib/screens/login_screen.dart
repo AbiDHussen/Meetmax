@@ -9,7 +9,6 @@ import 'package:meetmax/widgets/customButtonAndTextfield/social_button.dart';
 import 'package:meetmax/widgets/customButtonAndTextfield/custom_elevated_button.dart';
 import 'package:meetmax/screens/feed_screen.dart'; // or your actual path
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -25,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
   String _selectedLanguage = 'English (UK)';
   final _authService = AuthService();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const SizedBox(height: 16),
 
-                // ✅ Top App Header with logo + language dropdown
+                // Top App Header with logo + language dropdown
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -64,16 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           _selectedLanguage = newValue!;
                         });
                       },
-                      items: <String>[
-                        'English (UK)',
-                        'English (US)',
-                        'Bangla'
-                      ].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                      items: <String>['English (UK)', 'English (US)', 'Bangla']
+                          .map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          })
+                          .toList(),
                     ),
                   ],
                 ),
@@ -91,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // ✅ Container for Login Form Section
+                // Container for Login Form Section
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
@@ -102,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.black12,
                         blurRadius: 10,
                         offset: Offset(0, 4),
-                      )
+                      ),
                     ],
                   ),
                   child: Column(
@@ -112,13 +108,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           SocialButton(
                             text: 'Log in with Google',
-                            icon: const FaIcon(FontAwesomeIcons.google, color: Colors.black54),
+                            icon: const FaIcon(
+                              FontAwesomeIcons.google,
+                              color: Colors.black54,
+                            ),
                             onPressed: () {},
                           ),
                           const SizedBox(width: 12),
                           SocialButton(
                             text: 'Log in with Apple',
-                            icon: const FaIcon(FontAwesomeIcons.apple, color: Colors.black54),
+                            icon: const FaIcon(
+                              FontAwesomeIcons.apple,
+                              color: Colors.black54,
+                            ),
                             onPressed: () {},
                           ),
                         ],
@@ -136,7 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Text(
                             "OR",
-                            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           Expanded(
                             child: Divider(
@@ -164,9 +169,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         icon: FaIcon(FontAwesomeIcons.lock),
                         obscure: _obscurePassword,
                         suffixIcon: IconButton(
-                          icon: Icon(_obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility),
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
                           onPressed: () {
                             setState(() {
                               _obscurePassword = !_obscurePassword;
@@ -195,9 +202,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextButton(
                             onPressed: () {
-                              // TODO: Navigate to Forgot Password Screen
                               Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPasswordScreen(),
+                                ),
                               );
                             },
                             child: const Text(
@@ -212,39 +221,44 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       CustomElevatedButton(
                         text: 'Sign In',
-                          onPressed: () async {
-                            final email = _emailController.text.trim();
-                            final password = _passwordController.text.trim();
+                        onPressed: () async {
+                          final email = _emailController.text.trim();
+                          final password = _passwordController.text.trim();
 
-                            final success = await _authService.signIn(email: email, password: password);
+                          final success = await _authService.signIn(
+                            email: email,
+                            password: password,
+                          );
 
-                            if (success) {
-                              final authBox = Hive.box('auth');
+                          if (success) {
+                            final authBox = Hive.box('auth');
 
-                              if (_rememberMe) {
-                                // Save session
-                                authBox.put('currentUserEmail', email);
-                              } else {
-                                // Clear session on every login if not remembered
-                                authBox.delete('currentUserEmail');
-                              }
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Login successful')),
-                              );
-
-                              // Navigate to FeedPage
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => const FeedPage()),
-                              );
+                            if (_rememberMe) {
+                              // Save session
+                              authBox.put('currentUserEmail', email);
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Invalid email or password')),
-                              );
+                              // Clear session on every login if not remembered
+                              authBox.delete('currentUserEmail');
                             }
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Login successful')),
+                            );
+
+                            // Navigate to FeedPage
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const FeedPage(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Invalid email or password'),
+                              ),
+                            );
                           }
-
-
+                        },
                       ),
 
                       const SizedBox(height: 16),
@@ -255,9 +269,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           const Text("You haven’t any account? "),
                           GestureDetector(
                             onTap: () {
-                              // TODO: Navigate to Sign Up screen
                               Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen(),
+                                ),
                               );
                             },
                             child: const Text(

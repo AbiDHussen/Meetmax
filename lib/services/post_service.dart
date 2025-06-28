@@ -13,7 +13,6 @@ class PostService {
     await postBox.clear();
   }
 
-
   List<Post> getAllPosts() {
     return postBox.values.toList().reversed.toList(); // latest first
   }

@@ -1,8 +1,4 @@
-import 'package:meetmax/models/dummy_post.dart';
-import 'package:meetmax/models/dummy_user.dart';
-import 'package:meetmax/models/dummy_comment.dart';
-import 'package:meetmax/models/dummy_story.dart';
-
+import 'package:meetmax/dummyModels/models.dart';
 // Dummy users
 final DummyUser currentUser = DummyUser(
   name: 'Marcus Ng',
@@ -106,7 +102,7 @@ final List<DummyComment> sampleComments = [
 final List<DummyPost> dummyPosts = [
   DummyPost(
     user: currentUser,
-    caption: 'Just enjoying some sunshine ☀️',
+    caption: 'This is a demo post. Likes and comments are disabled.To See Like and Comments in Action Create a New Post.',
     timeAgo: '2h',
     imageUrl: 'https://images.unsplash.com/photo-1525253086316-d0c936c814f8?auto=format&fit=crop&w=1350&q=80',
     likes: allUsernames.sublist(0, 5),
@@ -115,7 +111,7 @@ final List<DummyPost> dummyPosts = [
   ),
   DummyPost(
     user: onlineUsers[0],
-    caption: 'Chillin’ by the beach 🌊',
+    caption: 'This is a demo post. Likes and comments are disabled.To See Like and Comments in Action Create a New Post.',
     timeAgo: '5h',
     imageUrl: 'https://images.unsplash.com/photo-1573331519317-30b24326bb9a?auto=format&fit=crop&w=1350&q=80',
     likes: allUsernames.sublist(1, 6),
@@ -124,7 +120,7 @@ final List<DummyPost> dummyPosts = [
   ),
   DummyPost(
     user: onlineUsers[1],
-    caption: 'Adventure time in the mountains 🏞',
+    caption: 'This is a demo post. Likes and comments are disabled.To See Like and Comments in Action Create a New Post.',
     timeAgo: '1d',
     imageUrl: 'https://images.unsplash.com/photo-1575535468632-345892291673?auto=format&fit=crop&w=634&q=80',
     likes: allUsernames.sublist(0, 5),

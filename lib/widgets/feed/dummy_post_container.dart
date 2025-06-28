@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:meetmax/models/post.dart';
-import 'package:meetmax/models/models.dart';
+import 'package:meetmax/dummyModels/models.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class PostContainer extends StatelessWidget {
+class DummyPostContainer extends StatelessWidget {
   final List<DummyPost> posts;
 
-  const PostContainer({super.key, required this.posts});
+  const DummyPostContainer({super.key, required this.posts});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: List.generate(
         posts.length,
-            (index) => Container(
-          margin: EdgeInsets.only(
-            top: index == 0 ? 0 : 8,
-            bottom: 8,
-          ),
+        (index) => Container(
+          margin: EdgeInsets.only(top: index == 0 ? 0 : 8, bottom: 8),
           child: _buildPostCard(posts[index]),
         ),
       ),
@@ -112,10 +108,10 @@ class PostContainer extends StatelessWidget {
   }
 
   Widget _buildPostButton(
-      IconData icon,
-      String label, {
-        bool isFaIcon = false,
-      }) {
+    IconData icon,
+    String label, {
+    bool isFaIcon = false,
+  }) {
     return TextButton.icon(
       onPressed: () {},
       icon: isFaIcon
@@ -134,9 +130,8 @@ class _PostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //  Print all user info for debugging
-    // debugPrint('🔍 User Info:');
+    // debugPrint(' User Info:');
     // debugPrint('Name: ${user.name}');
     // debugPrint('Email: ${user.email}');
     // debugPrint('Image URL: ${user.imageUrl}');

@@ -18,7 +18,7 @@ class Post extends HiveObject {
   final DateTime timestamp;
 
   @HiveField(4)
-  final List<String> likes;
+  late final List<String> likes;
 
   @HiveField(5)
   final List<Comment> comments;

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:meetmax/models/models.dart';
+import 'package:hive/hive.dart';
+import 'package:meetmax/dummyModels/models.dart';
+import 'package:meetmax/services/user_service.dart';
 
 class StoriesSection extends StatelessWidget {
   final List<DummyStory> stories;
@@ -9,6 +11,10 @@ class StoriesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authBox = Hive.box('auth');
+    final currentUserEmail = authBox.get('currentUserEmail');
+    final currentUser = UserService().getUserById(currentUserEmail);
+
     return SizedBox(
       height: 100,
       child: ListView.separated(
@@ -19,6 +25,12 @@ class StoriesSection extends StatelessWidget {
         itemBuilder: (context, index) {
           final story = stories[index];
           final isFirst = index == 0;
+
+          final String displayName = isFirst && currentUser != null
+              ? currentUser.name
+              : story.user.name;
+
+          final String imageUrl = story.user.imageUrl;
 
           return Column(
             children: [
@@ -34,12 +46,12 @@ class StoriesSection extends StatelessWidget {
                     ),
                     child: ClipOval(
                       child: CachedNetworkImage(
-                        imageUrl: story.user.imageUrl,
+                        imageUrl: imageUrl,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
-                        const CircularProgressIndicator(strokeWidth: 2),
+                            const CircularProgressIndicator(strokeWidth: 2),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -52,17 +64,17 @@ class StoriesSection extends StatelessWidget {
                           color: Colors.white,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.add_circle,
-                            color: Colors.blue, size: 20),
+                        child: const Icon(
+                          Icons.add_circle,
+                          color: Colors.blue,
+                          size: 20,
+                        ),
                       ),
                     ),
                 ],
               ),
               const SizedBox(height: 6),
-              Text(
-                story.user.name,
-                style: const TextStyle(fontSize: 12),
-              ),
+              Text(displayName, style: const TextStyle(fontSize: 12)),
             ],
           );
         },

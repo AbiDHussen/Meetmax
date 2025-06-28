@@ -1,5 +1,3 @@
-import 'dummy_user.dart';
-
 class DummyComment {
   final String userId;
   final String text;

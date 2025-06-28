@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:meetmax/models/user.dart';
-import 'package:meetmax/screens/feed_screen.dart'; // Make sure this import is correct
+import 'package:meetmax/screens/feed_screen.dart';
 
 class AuthService {
   final Box<User> userBox = Hive.box<User>('users');
@@ -32,13 +32,10 @@ class AuthService {
     return true;
   }
 
-  Future<bool> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<bool> signIn({required String email, required String password}) async {
     try {
       final user = userBox.values.firstWhere(
-            (u) => u.email == email && u.password == password,
+        (u) => u.email == email && u.password == password,
       );
       authBox.put('currentUserEmail', email);
       return true;
@@ -58,7 +55,7 @@ class AuthService {
 
   void logout() => authBox.delete('currentUserEmail');
 
-  /// ✅ Auto login if user session exists
+  /// Auto login if user session exists
   void checkAutoLogin(BuildContext context) {
     final rememberedEmail = authBox.get('currentUserEmail');
 

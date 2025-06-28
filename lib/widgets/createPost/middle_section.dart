@@ -33,7 +33,7 @@ class _MiddleSectionState extends State<MiddleSection> {
 
     if (picked != null) {
       final dir = await getApplicationDocumentsDirectory();
-      final name = p.basename(picked.path); // ✅ use p.basename
+      final name = p.basename(picked.path);
       final saved = await File(picked.path).copy('${dir.path}/$name');
 
       setState(() {
@@ -55,9 +55,9 @@ class _MiddleSectionState extends State<MiddleSection> {
     final currentEmail = authBox.get('currentUserEmail');
 
     if (currentEmail == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No logged in user found')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('No logged in user found')));
       return;
     }
 
@@ -73,9 +73,9 @@ class _MiddleSectionState extends State<MiddleSection> {
 
     await PostService().createPost(newPost);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Post created successfully')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Post created successfully')));
 
     Navigator.pushReplacement(
       context,
@@ -93,17 +93,33 @@ class _MiddleSectionState extends State<MiddleSection> {
           child: Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black87, size: 24),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black87,
+                  size: 24,
+                ),
                 onPressed: () => Navigator.pop(context),
               ),
               const SizedBox(width: 10),
-              const Text('Create a post',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87)),
+              const Text(
+                'Create a post',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.black87,
+                ),
+              ),
               const Spacer(),
-              const Text('Visible for', style: TextStyle(fontSize: 13, color: Colors.grey)),
+              const Text(
+                'Visible for',
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
               const SizedBox(width: 5),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 2,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(6),
@@ -111,8 +127,16 @@ class _MiddleSectionState extends State<MiddleSection> {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: widget.visibility,
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Colors.blue),
-                    icon: const Icon(Icons.arrow_drop_down, color: Colors.grey, size: 20),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                      color: Colors.blue,
+                    ),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
                     borderRadius: BorderRadius.circular(8),
                     dropdownColor: Colors.white,
                     items: ['Public', 'Friends', 'Only me'].map((value) {
@@ -182,14 +206,20 @@ class _MiddleSectionState extends State<MiddleSection> {
               const SizedBox(height: 20),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.videocam_outlined, color: Colors.black87),
+                leading: const Icon(
+                  Icons.videocam_outlined,
+                  color: Colors.black87,
+                ),
                 title: const Text("Live Video"),
                 dense: true,
                 visualDensity: VisualDensity.compact,
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.photo_library_outlined, color: Colors.black87),
+                leading: const Icon(
+                  Icons.photo_library_outlined,
+                  color: Colors.black87,
+                ),
                 title: const Text("Photo/Video"),
                 onTap: _pickImage,
                 dense: true,
@@ -197,7 +227,10 @@ class _MiddleSectionState extends State<MiddleSection> {
               ),
               const ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.emoji_emotions_outlined, color: Colors.black87),
+                leading: Icon(
+                  Icons.emoji_emotions_outlined,
+                  color: Colors.black87,
+                ),
                 title: Text("Feeling"),
                 dense: true,
                 visualDensity: VisualDensity.compact,
@@ -215,7 +248,10 @@ class _MiddleSectionState extends State<MiddleSection> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
-                  child: const Text("Post", style: TextStyle(fontSize: 16, color: Colors.white)),
+                  child: const Text(
+                    "Post",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
               ),
             ],

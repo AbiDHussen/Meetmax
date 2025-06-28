@@ -1,4 +1,4 @@
-import 'package:meetmax/models/dummy_comment.dart';
+import 'package:meetmax/dummyModels/dummy_comment.dart';
 
 import 'dummy_user.dart';
 

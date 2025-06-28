@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:meetmax/models/dummy_user.dart';
-import 'package:meetmax/models/user.dart';
+import 'package:meetmax/dummyModels/dummy_user.dart';
 import 'package:meetmax/screens/create_post_screen.dart';
 
 class CreatePostContainer extends StatelessWidget {
@@ -38,13 +37,14 @@ class CreatePostContainer extends StatelessWidget {
               ),
               const SizedBox(width: 10),
 
-// Input Field with Navigation to CreatePostScreen
               Expanded(
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const CreatePostScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const CreatePostScreen(),
+                      ),
                     );
                   },
                   child: Container(
@@ -63,7 +63,6 @@ class CreatePostContainer extends StatelessWidget {
                   ),
                 ),
               ),
-
             ],
           ),
 

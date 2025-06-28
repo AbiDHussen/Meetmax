@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:meetmax/widgets/customButtonAndTextfield/custom_text_field.dart';
 import 'package:meetmax/widgets/customButtonAndTextfield/custom_elevated_button.dart';
+import 'package:meetmax/screens/login_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -118,7 +119,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     const SizedBox(height: 16),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pop(context); // Back to login
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

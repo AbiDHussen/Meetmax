@@ -15,7 +15,7 @@ Meetmax is a Facebook-style social media app built using Flutter and Dart, desig
 ### 🛠 Setup Instructions
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/meetmax.git
+   git clone https://github.com/AbiDHussen/meetmax.git
    cd meetmax
    ```
 
@@ -76,7 +76,6 @@ lib/
 - ✅ Create post functionality (supports text and image)
 - ✅ Like and comment on posts in real time
 - ✅ User profile page with basic info
-- ✅ Forgot password screen with mock reset
 
 ---
 
@@ -88,17 +87,16 @@ lib/
 
 | Forgot Password                                  | Feed Screen                              |
 |--------------------------------------------------|------------------------------------------|
-| ![forgot](assets/screenshots/ForgotPassword.png) | ![feed](assets/screenshots/FeedPage.png) |
+| ![forgot](assets/screenshots/ForgotPassword.jpg) | ![feed](assets/screenshots/FeedPage.jpg) |
 
 | Create Post                                  | Profile Screen                             |
 |----------------------------------------------|--------------------------------------------|
-| ![create](assets/screenshots/CreatePost.png) | ![profile](assets/screenshots/Profile.png) |
+| ![create](assets/screenshots/CreatePost.jpg) | ![profile](assets/screenshots/Profile.jpg) |
 
 | Comments Section                             |
 |----------------------------------------------|
-| ![comments](assets/screenshots/Comments.png) |
+| ![comments](assets/screenshots/Comments.jpg) |
 
-> ⚠️ Make sure to replace image paths with actual screenshot images placed in a `screenshots/` directory inside your root project.
 
 ---
 
@@ -110,10 +108,5 @@ lib/
 - User sessions are preserved using local box storage.
 - ⚠️ **Likes and comments will not work on dummy posts. They only function on real posts created by the user.**
 
----
-
-## ✅ Notes
-- This project is self-contained and does not require an internet connection.
-- Designed for Android but should work cross-platform.
 
 ---

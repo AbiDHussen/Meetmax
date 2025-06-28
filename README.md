@@ -15,19 +15,25 @@ Meetmax is a Facebook-style social media app built using Flutter and Dart, desig
 ### 🛠 Setup Instructions
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/AbiDHussen/meetmax.git
-   cd meetmax
+   git clone https://github.com/AbiDHussen/Meetmax.git
+   cd Meetmax
    ```
 
-2. **Get all dependencies**
+2. **Install dependencies**
    ```bash
    flutter pub get
    ```
 
-3. **Run the app**
+3. **Generate Hive type adapters**
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+4. **Run the app**
    ```bash
    flutter run
    ```
+   On first launch, the app will auto‑seed dummy users, stories, posts, and comments into Hive.
 
 ---
 

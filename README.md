@@ -10,7 +10,7 @@ Meetmax is a Facebook-style social media app built using Flutter and Dart, desig
 ### ✅ Prerequisites
 - Flutter SDK installed
 - Dart installed
-- Compatible editor like **VS Code** or **Android Studio**
+- Compatible editor like **Android Studio**
 
 ### 🛠 Setup Instructions
 1. **Clone the repository**

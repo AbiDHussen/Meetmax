@@ -13,7 +13,9 @@ class StoriesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final authBox = Hive.box('auth');
     final currentUserEmail = authBox.get('currentUserEmail');
-    final currentUser = UserService().getUserById(currentUserEmail);
+    final currentUser = currentUserEmail != null
+        ? UserService().getUserById(currentUserEmail)
+        : null;
 
     return SizedBox(
       height: 100,
@@ -26,9 +28,9 @@ class StoriesSection extends StatelessWidget {
           final story = stories[index];
           final isFirst = index == 0;
 
-          final String displayName = isFirst && currentUser != null
-              ? currentUser.name
-              : story.user.name;
+          final String displayName = isFirst
+              ? (currentUser?.name ?? 'You')
+              : (story.user.name ?? 'User');
 
           final String imageUrl = story.user.imageUrl;
 
@@ -49,9 +51,9 @@ class StoriesSection extends StatelessWidget {
                         imageUrl: imageUrl,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
-                            const CircularProgressIndicator(strokeWidth: 2),
+                        const CircularProgressIndicator(strokeWidth: 2),
                         errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                        const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -74,7 +76,11 @@ class StoriesSection extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 6),
-              Text(displayName, style: const TextStyle(fontSize: 12)),
+              Text(
+                displayName,
+                style: const TextStyle(fontSize: 12),
+                overflow: TextOverflow.ellipsis,
+              ),
             ],
           );
         },
